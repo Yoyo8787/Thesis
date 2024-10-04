@@ -15,7 +15,7 @@ function App() {
             "寵物介紹",
             "課程 企業減碳法規全攻略 (上)",
             "測驗 企業減碳法規全攻略 (上)",
-            "寵物更新",
+            "寵物狀態更新",
             "課程 企業減碳法規全攻略 (下)",
             "測驗 企業減碳法規全攻略 (下)",
         ];
@@ -32,7 +32,7 @@ function App() {
     };
 
     useEffect(() => {
-        if (experimentStage[stage] === "寵物更新") {
+        if (experimentStage[stage] === "寵物狀態更新") {
             setPet((prevPet) => {
                 return { name: prevPet.name, interact: !prevPet.interact };
             });
@@ -86,7 +86,7 @@ function App() {
                     addResults={addResults}
                 />
             )}
-            {experimentStage[stage] === "寵物更新" && (
+            {experimentStage[stage] === "寵物狀態更新" && (
                 <PetIntroduction pet={pet} setLock={setLock} />
             )}
             {experimentStage[stage] === "課程 企業減碳法規全攻略 (下)" && (

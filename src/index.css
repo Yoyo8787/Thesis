@@ -117,7 +117,7 @@ code {
 }
 .videoPlayer {
     width: 95vw;
-    max-width: 85rem;
+    max-width: 70rem;
     max-height: calc(100vh - 14rem);
     margin: auto;
     position: relative;

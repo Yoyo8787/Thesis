@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import Exam1 from "../assets/Exam1.json";
 import Exam2 from "../assets/Exam2.json";
 
-const ExamPage = ({ courseNum, setLock }) => {
+const ExamPage = ({ courseNum, setLock, addResults }) => {
     const questions = useMemo(() => {
         if (courseNum === 1) {
             return Exam1.questions;
@@ -31,6 +31,7 @@ const ExamPage = ({ courseNum, setLock }) => {
                 }
             });
             setLock(false);
+            addResults(retentionScore, transferScore);
         }
 
         setUserAnswers(updatedAnswers);

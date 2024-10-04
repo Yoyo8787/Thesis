@@ -20,7 +20,7 @@ import back_0 from "./Pet_2_back_0.png";
 const Pet1 = {
     idleAnime: [idle_0, idle_1, idle_2, idle_3],
     walkAnime: [walk_0, walk_1, walk_2, walk_3],
-    clickAnime: [click_1, click_2, click_3],
+    clickAnime: [click_1, click_1, click_2, click_3, click_3],
     holdAnime: [hold_0],
     backAnime: [back_0],
 };

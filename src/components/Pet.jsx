@@ -37,33 +37,37 @@ const Pet = ({ setting }) => {
     // 播放動畫
     useEffect(() => {
         const interval = setInterval(() => {
-            if (isDragging) return; // 拖曳時不播放動畫
-
+            if (isDragging) return;
             setFrame((prevFrame) => {
-                // 當 currentAnimation 是 click 且到達最後一幀時，切換到 back 動畫
-                if (
-                    currentAnimation === Animation.click &&
-                    prevFrame === currentAnimation.length - 1
-                ) {
-                    setCurrentAnimation(Animation.back);
-                    return 0;
-                }
-                // 當 currentAnimation 是 back 且到達最後一幀時，重置為 idle 動畫
-                if (
-                    currentAnimation === Animation.back &&
-                    prevFrame === currentAnimation.length - 1
-                ) {
-                    setIsClicked(false);
-                    setIsDragging(false);
-                    setCurrentAnimation(Animation.idle);
-                    return 0;
-                }
-                return (prevFrame + 1) % currentAnimation.length;
+                return prevFrame + 1;
             });
         }, 200);
 
-        return () => clearInterval(interval); // 清理定時器
-    }, [currentAnimation, isDragging, Animation]);
+        return () => clearInterval(interval);
+    }, [isDragging, Animation]);
+
+    const playAnimation = (animation, name) => {
+        console.log("play", name);
+        setFrame(0);
+        setCurrentAnimation(animation);
+    };
+
+    useEffect(() => {
+        if (
+            currentAnimation === Animation.click &&
+            frame === Animation.click.length
+        ) {
+            playAnimation(Animation.back, "back");
+        }
+        if (
+            currentAnimation === Animation.back &&
+            frame === Animation.back.length
+        ) {
+            setIsClicked(false);
+            setIsDragging(false);
+            playAnimation(Animation.idle, "idle");
+        }
+    }, [Animation, currentAnimation, frame]);
 
     // 拖曳時旋轉
     useEffect(() => {
@@ -90,8 +94,7 @@ const Pet = ({ setting }) => {
             }
             if (e.code === "Space") {
                 setIsClicked(true);
-                setCurrentAnimation(Animation.click);
-                setFrame(0); // 重置幀
+                playAnimation(Animation.click, "click");
             }
         };
         window.addEventListener("keydown", handleKeyDown);
@@ -172,8 +175,8 @@ const Pet = ({ setting }) => {
             const walkDuration = Math.random() * 6000 + 5000;
             const newDirection = calculateDirection(walkDuration);
             setDirection(newDirection);
-            setCurrentAnimation(Animation.walk);
-            setFrame(0);
+            console.log("walk", newDirection);
+            playAnimation(Animation.walk, "walk");
 
             walkInterval = setInterval(() => {
                 if (isClicked || isDragging) {
@@ -197,8 +200,8 @@ const Pet = ({ setting }) => {
             walkTimeout = setTimeout(() => {
                 positionRef.current = tempPosition;
                 clearInterval(walkInterval);
-                setCurrentAnimation(Animation.idle); // 回到idle狀態
-                setFrame(0);
+                console.log("walk end");
+                playAnimation(Animation.idle, "idle"); // 回到idle狀態
                 setRandomWalkTimeout(); // 再次設置隨機時間觸發走動
             }, walkDuration);
         };
@@ -221,8 +224,7 @@ const Pet = ({ setting }) => {
         if (!setting.interact) {
             return;
         }
-        setCurrentAnimation(Animation.hold);
-        setFrame(0);
+        playAnimation(Animation.hold, "hold");
         setIsDragging(true);
         setMouse([e.clientX, e.clientY]);
         setPosition([e.clientX - 100, e.clientY - 100]);
@@ -254,13 +256,13 @@ const Pet = ({ setting }) => {
         if (!setting.interact) {
             return;
         }
-        setCurrentAnimation(Animation.back);
         setIsDragging(false);
+        playAnimation(Animation.back, "back");
     };
 
     return (
         <img
-            src={currentAnimation[frame]}
+            src={currentAnimation[frame % currentAnimation.length]}
             draggable="false"
             alt="pet"
             onMouseDown={handleMouseDown}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Pet from "./components/Pet";
 import Introduction from "./components/Introduction";
@@ -8,17 +8,20 @@ import ExamPage from "./components/ExamPage";
 import SettingPage from "./components/SettingPage";
 
 function App() {
-    const experimentStage = [
-        "實驗設定",
-        "實驗介紹",
-        "寵物介紹",
-        "課程 企業減碳法規全攻略 (上)",
-        "測驗 企業減碳法規全攻略 (上)",
-        "寵物更新",
-        "課程 企業減碳法規全攻略 (下)",
-        "測驗 企業減碳法規全攻略 (下)",
-    ];
+    const experimentStage = useMemo(() => {
+        return [
+            "實驗設定",
+            "實驗介紹",
+            "寵物介紹",
+            "課程 企業減碳法規全攻略 (上)",
+            "測驗 企業減碳法規全攻略 (上)",
+            "寵物更新",
+            "課程 企業減碳法規全攻略 (下)",
+            "測驗 企業減碳法規全攻略 (下)",
+        ];
+    }, []);
     const [stage, setStage] = useState(0);
+    const [showBt, setShowBt] = useState(false);
     const [lock, setLock] = useState(true);
     const [pet, setPet] = useState({ name: "pet1", interact: false });
     const [results, setResults] = useState({});
@@ -27,7 +30,36 @@ function App() {
         setStage((prevStage) => prevStage + 1);
         setLock(true);
     };
-    const addResults = (retention, transfer) => {};
+
+    useEffect(() => {
+        if (experimentStage[stage] === "寵物更新") {
+            setPet((prevPet) => {
+                return { name: prevPet.name, interact: !prevPet.interact };
+            });
+        }
+        if (
+            experimentStage[stage] === "實驗設定" ||
+            experimentStage[stage] === "測驗 企業減碳法規全攻略 (下)"
+        ) {
+            setShowBt(false);
+        } else {
+            setShowBt(true);
+        }
+    }, [experimentStage, stage]);
+
+    const addResults = (retention, transfer) => {
+        setResults((prevResults) => {
+            return {
+                ...prevResults,
+                [experimentStage[stage]]: {
+                    courseRelation: pet.name,
+                    interactivity: pet.interact,
+                    retention,
+                    transfer,
+                },
+            };
+        });
+    };
 
     return (
         <>
@@ -39,24 +71,38 @@ function App() {
                 <Introduction setLock={setLock} />
             )}
             {experimentStage[stage] === "寵物介紹" && (
-                <PetIntroduction setLock={setLock} />
+                <PetIntroduction pet={pet} setLock={setLock} />
             )}
             {experimentStage[stage] === "課程 企業減碳法規全攻略 (上)" && (
-                <CoursePage courseNum={1} setLock={setLock} />
+                <>
+                    <CoursePage courseNum={1} setLock={setLock} />
+                    <Pet setting={pet} />
+                </>
             )}
             {experimentStage[stage] === "測驗 企業減碳法規全攻略 (上)" && (
-                <ExamPage courseNum={1} setLock={setLock} />
+                <ExamPage
+                    courseNum={1}
+                    setLock={setLock}
+                    addResults={addResults}
+                />
             )}
             {experimentStage[stage] === "寵物更新" && (
-                <PetIntroduction courseNum={2} setLock={setLock} />
+                <PetIntroduction pet={pet} setLock={setLock} />
             )}
             {experimentStage[stage] === "課程 企業減碳法規全攻略 (下)" && (
-                <CoursePage courseNum={2} setLock={setLock} />
+                <>
+                    <CoursePage courseNum={2} setLock={setLock} />
+                    <Pet setting={pet} />
+                </>
             )}
             {experimentStage[stage] === "測驗 企業減碳法規全攻略 (下)" && (
-                <ExamPage courseNum={2} setLock={setLock} />
+                <ExamPage
+                    courseNum={2}
+                    setLock={setLock}
+                    addResults={addResults}
+                />
             )}
-            <Pet setting={pet} />
+
             <button
                 className="nextBt"
                 onClick={() => {
@@ -64,6 +110,7 @@ function App() {
                     setLock(true);
                 }}
                 disabled={lock}
+                style={{ display: showBt ? "block" : "none" }}
             >
                 下一步
             </button>

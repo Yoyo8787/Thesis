@@ -7,12 +7,12 @@ const SettingPage = ({ nextStage, setPet }) => {
     const userNameRef = useRef(null);
 
     return (
-        <div>
-            <div>
+        <div className="SettingPage">
+            <div className="settingblock">
                 <label htmlFor="userName">姓名:</label>
                 <input type="text" id="userName" ref={userNameRef} />
             </div>
-            <div>
+            <div className="settingblock">
                 <label htmlFor="pet">寵物選擇:</label>
                 <select id="pet" ref={petRef}>
                     <option value="" disabled>
@@ -23,7 +23,7 @@ const SettingPage = ({ nextStage, setPet }) => {
                 </select>
             </div>
 
-            <div>
+            <div className="settingblock">
                 <label htmlFor="interactivity">初始模式選擇:</label>
                 <select id="interactivity" ref={interactivityRef}>
                     <option value="" disabled>
@@ -33,18 +33,29 @@ const SettingPage = ({ nextStage, setPet }) => {
                     <option value="noninteractive">不可互動</option>
                 </select>
             </div>
-            <button
-                onClick={() => {
-                    setPet({
-                        name: petRef.current.value,
-                        interact:
-                            interactivityRef.current.value === "ineractive",
-                    });
-                    nextStage();
-                }}
-            >
-                開始
-            </button>
+            <div className="settingblock" style={{ justifyContent: "center" }}>
+                <button
+                    style={{
+                        width: "10rem",
+                        height: "2.5rem",
+                        fontWeight: "bold",
+                        fontSize: "1.25rem",
+                        borderRadius: ".25rem",
+                        border: "none",
+                        backgroundColor: "var(--primarycolor)",
+                    }}
+                    onClick={() => {
+                        setPet({
+                            name: petRef.current.value,
+                            interact:
+                                interactivityRef.current.value === "ineractive",
+                        });
+                        nextStage();
+                    }}
+                >
+                    開始
+                </button>
+            </div>
         </div>
     );
 };

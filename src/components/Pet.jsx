@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Pet1 from "../assets/Pet1/Pet1";
 import Pet2 from "../assets/Pet2/Pet2";
+import { isEqual } from "lodash";
 const Pet = ({ setting }) => {
     const Animation = useMemo(() => {
         if (setting.name === "related") {
@@ -37,14 +38,13 @@ const Pet = ({ setting }) => {
     // 播放動畫
     useEffect(() => {
         const interval = setInterval(() => {
-            if (isDragging) return;
             setFrame((prevFrame) => {
                 return prevFrame + 1;
             });
         }, 200);
 
         return () => clearInterval(interval);
-    }, [isDragging, Animation]);
+    }, [Animation]);
 
     const playAnimation = (animation, name) => {
         console.log("play", name);
@@ -54,13 +54,13 @@ const Pet = ({ setting }) => {
 
     useEffect(() => {
         if (
-            currentAnimation === Animation.click &&
+            isEqual(currentAnimation, Animation.click) &&
             frame === Animation.click.length
         ) {
-            playAnimation(Animation.back, "back");
+            playAnimation(Animation.back, "back from click");
         }
         if (
-            currentAnimation === Animation.back &&
+            isEqual(currentAnimation, Animation.back) &&
             frame === Animation.back.length
         ) {
             setIsClicked(false);
@@ -253,11 +253,11 @@ const Pet = ({ setting }) => {
         }
     };
     const handleMouseUp = () => {
-        if (!setting.interact) {
+        if (!setting.interact || !isDragging) {
             return;
         }
         setIsDragging(false);
-        playAnimation(Animation.back, "back");
+        playAnimation(Animation.back, "back from drag");
     };
 
     return (
@@ -275,11 +275,8 @@ const Pet = ({ setting }) => {
                 left: position[0],
                 top: position[1],
                 transform: `rotate(${isDragging ? rotation : 0}deg) rotateY(${
-                    direction >= 90 && direction <= 270
-                        ? setting.name === "related"
-                            ? 0
-                            : 180
-                        : setting.name === "related"
+                    (direction >= 90 && direction <= 270) ===
+                    (setting.name !== "related")
                         ? 180
                         : 0
                 }deg)`,

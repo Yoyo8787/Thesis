@@ -3,7 +3,7 @@ import { Pet1Intro } from "../assets/Pet1/Pet1";
 import { Pet2Intro } from "../assets/Pet2/Pet2";
 
 const PetIntroduction = ({ pet, setLock }) => {
-    const petIntro = pet === "related" ? Pet1Intro : Pet2Intro;
+    const petIntro = pet.name === "related" ? Pet1Intro : Pet2Intro;
     const interactalbe = pet.interact;
 
     return (

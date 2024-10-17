@@ -4,14 +4,8 @@ const SettingPage = ({ nextStage, setPet }) => {
     const petRef = useRef(null);
     const interactivityRef = useRef(null);
 
-    const userNameRef = useRef(null);
-
     return (
         <div className="SettingPage">
-            <div className="settingblock">
-                <label htmlFor="userName">姓名:</label>
-                <input type="text" id="userName" ref={userNameRef} />
-            </div>
             <div className="settingblock">
                 <label htmlFor="pet">寵物選擇:</label>
                 <select id="pet" ref={petRef}>

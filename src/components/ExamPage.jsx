@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from "react";
 import Exam1 from "../assets/Exam1.json";
 import Exam2 from "../assets/Exam2.json";
+import LikertScale from "./LikertScale";
 
-const ExamPage = ({ courseNum, setLock, addResults }) => {
+const ExamPage = ({ courseNum, addResults }) => {
     const questions = useMemo(() => {
         if (courseNum === 1) {
             return Exam1.questions;
@@ -30,7 +31,6 @@ const ExamPage = ({ courseNum, setLock, addResults }) => {
                     }
                 }
             });
-            setLock(false);
             addResults(retentionScore, transferScore);
         }
 
@@ -66,6 +66,7 @@ const ExamPage = ({ courseNum, setLock, addResults }) => {
                     ))}
                 </div>
             ))}
+            <LikertScale />
         </div>
     );
 };

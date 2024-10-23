@@ -1,49 +1,76 @@
 import React, { useState } from "react";
 import DV from "../assets/DV.json";
 
-const LikertScale = () => {
+const LikertScale = ({ examRef, checkFinished }) => {
     const [responses, setResponses] = useState({});
 
-    const handleResponseChange = (event) => {
-        const { name, value } = event.target;
+    const handleResponseChange = (name, statementIndex, value) => {
+        examRef.current[name][statementIndex] = value;
         setResponses({
             ...responses,
-            [name]: value,
+            [`${name}_${statementIndex}`]: value,
         });
+        checkFinished();
     };
 
-    const renderLikertOptions = (name) => {
+    const LikertOptions = (name, statementIndex) => {
         return (
-            <div>
+            <>
                 {[...Array(7)].map((_, index) => (
-                    <label key={index}>
+                    <td
+                        key={index}
+                        className="radio"
+                        onClick={() =>
+                            handleResponseChange(
+                                name,
+                                statementIndex,
+                                index + 1
+                            )
+                        }
+                    >
                         <input
                             type="radio"
-                            name={name}
                             value={index + 1}
-                            onChange={handleResponseChange}
-                            checked={responses[name] === String(index + 1)}
+                            onChange={() =>
+                                handleResponseChange(
+                                    name,
+                                    statementIndex,
+                                    index + 1
+                                )
+                            }
+                            checked={
+                                responses[`${name}_${statementIndex}`] ===
+                                index + 1
+                            }
                         />
-                        {index + 1}
-                    </label>
+                    </td>
                 ))}
-            </div>
+            </>
         );
     };
 
     return (
         <>
             {DV.questions.map((section, sectionIndex) => (
-                <div key={sectionIndex}>
+                <table key={section.name} className="likert">
+                    <tr>
+                        <th></th>
+                        <th className="likertHead">非常不同意</th>
+                        <th className="likertHead">不同意</th>
+                        <th className="likertHead">稍微不同意</th>
+                        <th className="likertHead">中立</th>
+                        <th className="likertHead">稍微同意</th>
+                        <th className="likertHead">同意</th>
+                        <th className="likertHead">非常同意</th>
+                    </tr>
+
                     {section.statements.map((statement, statementIndex) => (
-                        <div key={statementIndex}>
-                            <p>{statement}</p>
-                            {renderLikertOptions(
-                                `q${sectionIndex}_${statementIndex}`
-                            )}
-                        </div>
+                        <tr key={statementIndex}>
+                            <td className="statement">{statement}</td>
+                            {LikertOptions(section.name, statementIndex)}
+                        </tr>
                     ))}
-                </div>
+                </table>
             ))}
         </>
     );

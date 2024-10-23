@@ -148,9 +148,8 @@ code {
     margin-left: calc(50% - 7.5rem);
 }
 .videoPlayer {
-    width: 95vw;
-    max-width: 70rem;
-    max-height: calc(100vh - 14rem);
+    width: 70rem;
+    height: 40rem;
     margin: auto;
     position: relative;
 }
@@ -189,6 +188,9 @@ code {
 .question {
     margin-bottom: 2rem;
 }
+.question h3 {
+    margin-bottom: 0rem;
+}
 .option {
     margin-top: 0.5rem;
     display: flex;
@@ -196,4 +198,37 @@ code {
     gap: 1rem;
     cursor: pointer;
     user-select: none;
+}
+.option input {
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+/* DV的李克特量表們 */
+.likert {
+    margin-bottom: 1rem;
+}
+.likert tr {
+    height: 4rem;
+}
+.statement {
+    width: 16rem;
+    padding-left: 0.5rem;
+}
+.likertHead {
+    width: 5rem;
+    font-size: 0.8rem;
+    justify-content: center;
+    align-items: center;
+}
+.radio {
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: center;
+}
+
+.otherInput {
+    margin-left: 1rem;
+    border: none;
+    border-bottom: 1px solid var(--fontcolor);
 }

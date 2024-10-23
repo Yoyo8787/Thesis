@@ -40,8 +40,8 @@ const SettingPage = ({ nextStage, setPet }) => {
                     }}
                     onClick={() => {
                         setPet({
-                            name: petRef.current.value,
-                            interact:
+                            courseRelated: petRef.current.value === "related",
+                            interactivity:
                                 interactivityRef.current.value === "ineractive",
                         });
                         nextStage();

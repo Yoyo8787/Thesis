@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import playIcon from "../assets/play-button.png";
 import pauseIcon from "../assets/pause-button.png";
 
-function VideoPlayer({ link, setLock }) {
+function VideoPlayer({ connect, link, setLock }) {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -22,7 +22,7 @@ function VideoPlayer({ link, setLock }) {
     };
 
     return (
-        <div className="videoPlayer">
+        <div ref={connect} className="videoPlayer">
             <button
                 className="videoPlayer_button"
                 onClick={handleTogglePlayPause}

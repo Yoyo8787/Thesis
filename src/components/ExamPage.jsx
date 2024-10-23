@@ -1,73 +1,48 @@
-import React, { useMemo, useState } from "react";
-import Exam1 from "../assets/Exam1.json";
-import Exam2 from "../assets/Exam2.json";
+import React, { useRef, useState } from "react";
+import Exam from "./Exam";
 import LikertScale from "./LikertScale";
 
-const ExamPage = ({ courseNum, addResults }) => {
-    const questions = useMemo(() => {
-        if (courseNum === 1) {
-            return Exam1.questions;
+const ExamPage = ({ courseNum, addResults, nextStage }) => {
+    const [lock, setLock] = useState(true);
+    const examRef = useRef({
+        retention: 0,
+        transfer: 0,
+        "MW-D": [0, 0, 0, 0],
+        "MW-S": [0, 0, 0, 0],
+        intrest: [0, 0],
+        engagement: [0, 0],
+    });
+    const handleSubmit = () => {
+        addResults(examRef.current);
+        nextStage();
+    };
+    const checkFinished = () => {
+        if (
+            !examRef.current["MW-D"].includes(0) &&
+            !examRef.current["MW-S"].includes(0) &&
+            !examRef.current.intrest.includes(0) &&
+            !examRef.current.engagement.includes(0)
+        ) {
+            setLock(false);
         } else {
-            return Exam2.questions;
+            console.log(examRef.current);
         }
-    }, [courseNum]);
-    const [userAnswers, setUserAnswers] = useState(
-        Array(questions.length).fill(null)
-    );
-
-    const handleAnswerChange = (questionId, answerIndex) => {
-        const updatedAnswers = [...userAnswers];
-        updatedAnswers[questionId - 1] = answerIndex;
-
-        if (!updatedAnswers.includes(null)) {
-            let retentionScore = 0;
-            let transferScore = 0;
-            questions.forEach((question, index) => {
-                if (userAnswers[index] === question.correct) {
-                    if (question.category === "retention") {
-                        retentionScore++;
-                    } else {
-                        transferScore++;
-                    }
-                }
-            });
-            addResults(retentionScore, transferScore);
-        }
-
-        setUserAnswers(updatedAnswers);
     };
 
     return (
-        <div className="ExamPage">
-            {questions.map((question) => (
-                <div key={question.id} className="question">
-                    <p>
-                        <strong>{`第 ${question.id} 題: `}</strong>{" "}
-                        {`${question.question}`}
-                    </p>
-                    {question.options.map((option, index) => (
-                        <div className="option" key={question.id + "_" + index}>
-                            <input
-                                type="radio"
-                                name={`question-${question.id}`}
-                                id={`question-${question.id}-option-${index}`}
-                                value={index}
-                                checked={userAnswers[question.id - 1] === index}
-                                onChange={() =>
-                                    handleAnswerChange(question.id, index)
-                                }
-                            />
-                            <label
-                                htmlFor={`question-${question.id}-option-${index}`}
-                            >
-                                {option}
-                            </label>
-                        </div>
-                    ))}
-                </div>
-            ))}
-            <LikertScale />
-        </div>
+        <>
+            <div className="ExamPage">
+                <Exam
+                    courseNum={courseNum}
+                    examRef={examRef}
+                    checkFinished={checkFinished}
+                />
+                <LikertScale examRef={examRef} checkFinished={checkFinished} />
+            </div>
+            <button className="nextBt" onClick={handleSubmit} disabled={lock}>
+                下一步
+            </button>
+        </>
     );
 };
 

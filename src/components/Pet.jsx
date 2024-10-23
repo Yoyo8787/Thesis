@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Pet1 from "../assets/Pet1/Pet1";
 import Pet2 from "../assets/Pet2/Pet2";
 import { isEqual } from "lodash";
-const Pet = ({ setting }) => {
+const Pet = ({ connect, setting, recordRef }) => {
     const Animation = useMemo(() => {
-        if (setting.name === "related") {
+        if (setting.courseRelated) {
             return {
                 idle: Pet1.idleAnime,
                 walk: Pet1.walkAnime,
@@ -28,7 +28,7 @@ const Pet = ({ setting }) => {
     const [isClicked, setIsClicked] = useState(false);
     const [mouse, setMouse] = useState([0, 0]);
     const [rotation, setRotation] = useState(0);
-    const [position, setPosition] = useState([400, 400]);
+    const [position, setPosition] = useState([400, 700]);
     const [direction, setDirection] = useState(0);
     const positionRef = useRef([0, 0]);
 
@@ -89,19 +89,20 @@ const Pet = ({ setting }) => {
     // 按下空白鍵時播放點擊動畫
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (!setting.interact) {
+            if (!setting.interactivity) {
                 return;
             }
             if (e.code === "Space") {
                 setIsClicked(true);
                 playAnimation(Animation.click, "click");
+                recordRef.current.petClicked += 1;
             }
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [Animation.click, setting.interact]);
+    }, [Animation.click, setting.interactivity, recordRef]);
 
     // 控制行走和休息的定時器
     const calculateDirection = useCallback((walkDuration) => {
@@ -211,26 +212,29 @@ const Pet = ({ setting }) => {
             randomTimeout = setTimeout(startWalking, restDuration);
         };
 
-        setRandomWalkTimeout();
+        if (setting.interactivity) {
+            setRandomWalkTimeout();
+        }
 
         return () => {
             if (randomTimeout) clearTimeout(randomTimeout);
             if (walkInterval) clearInterval(walkInterval); // 清理 walkInterval
             if (walkTimeout) clearTimeout(walkTimeout);
         };
-    }, [Animation, calculateDirection, isClicked, isDragging]);
+    }, [Animation, calculateDirection, isClicked, isDragging, setting]);
 
     const handleMouseDown = (e) => {
-        if (!setting.interact) {
+        if (!setting.interactivity) {
             return;
         }
         playAnimation(Animation.hold, "hold");
         setIsDragging(true);
         setMouse([e.clientX, e.clientY]);
         setPosition([e.clientX - 100, e.clientY - 100]);
+        recordRef.current.petDragged += 1;
     };
     const handleMouseMove = (e) => {
-        if (!setting.interact) {
+        if (!setting.interactivity) {
             return;
         }
         e.preventDefault();
@@ -253,7 +257,7 @@ const Pet = ({ setting }) => {
         }
     };
     const handleMouseUp = () => {
-        if (!setting.interact || !isDragging) {
+        if (!setting.interactivity || !isDragging) {
             return;
         }
         setIsDragging(false);
@@ -262,6 +266,7 @@ const Pet = ({ setting }) => {
 
     return (
         <img
+            ref={connect}
             src={currentAnimation[frame % currentAnimation.length]}
             draggable="false"
             alt="pet"
@@ -276,7 +281,7 @@ const Pet = ({ setting }) => {
                 top: position[1],
                 transform: `rotate(${isDragging ? rotation : 0}deg) rotateY(${
                     (direction >= 90 && direction <= 270) ===
-                    (setting.name !== "related")
+                    !setting.courseRelated
                         ? 180
                         : 0
                 }deg)`,

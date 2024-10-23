@@ -52,12 +52,12 @@ const VarkQuiz = ({ nextStage, addVARKResults }) => {
         <>
             <div className="ExamPage">
                 {VARK.questions.map((question) => (
-                    <div key={question.id}>
+                    <div key={question.id} className="question">
                         <h3 style={{ marginBottom: ".25rem" }}>
                             {question.text}
                         </h3>
                         {question.options.map((option) => (
-                            <div key={option.id}>
+                            <div key={option.id} className="option">
                                 <label>
                                     <input
                                         checked={

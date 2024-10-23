@@ -1,0 +1,40 @@
+{
+    "gender": {
+        "question": "性別 (Gender)",
+        "options": [
+            "男性 (Male)",
+            "女性 (Female)",
+            "其他 (Other)",
+            "不願透露 (Prefer not to say)"
+        ],
+        "type": "radio",
+        "otherOption": true
+    },
+    "age": {
+        "question": "年齡 (Age)",
+        "options": [
+            "18 歲以下 (Under 18)",
+            "18-24 歲 (18-24)",
+            "25-34 歲 (25-34)",
+            "35-44 歲 (35-44)",
+            "45-54 歲 (45-54)",
+            "55-64 歲 (55-64)",
+            "65 歲以上 (65 and above)"
+        ],
+        "type": "radio"
+    },
+    "education": {
+        "question": "教育程度 (Education Level)",
+        "options": [
+            "高中以下 (High school or below)",
+            "高中畢業 (High school graduate)",
+            "大專/技術學院 (Associate degree/Technical college)",
+            "大學學士 (Bachelor's degree)",
+            "碩士學位 (Master's degree)",
+            "博士學位 (Doctoral degree)",
+            "其他 (Other)"
+        ],
+        "type": "radio",
+        "otherOption": true
+    }
+}

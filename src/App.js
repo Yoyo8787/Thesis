@@ -1,67 +1,62 @@
-import { useEffect, useState } from "react";
-
-import Introduction from "./components/Introduction";
+import { useEffect, useState, useRef } from "react";
+import { merge } from "lodash";
+import Introduction from "./components/IntroductionPage";
 import CoursePage from "./components/CoursePage";
-import PetIntroduction from "./components/PetIntroduction";
+import PetIntroduction from "./components/PetIntroductionPage";
 import ExamPage from "./components/ExamPage";
 import SettingPage from "./components/SettingPage";
 import LearningTestPage from "./components/LearningTestPage";
-import Pet from "./components/Pet";
+import InfoFormPage from "./components/InfoFormPage";
 
 function App() {
     const [stage, setStage] = useState(0);
-    const [showBt, setShowBt] = useState(false);
-    const [lock, setLock] = useState(true);
-    const [pet, setPet] = useState({ name: "pet1", interact: false });
-    const [results, setResults] = useState({});
+    const [pet, setPet] = useState({
+        courseRelated: false,
+        interactivity: false,
+    });
+    const ResultRef = useRef({
+        results: [],
+    });
 
     //流程控制
-    const handleNext = () => {
-        setStage((prevStage) => prevStage + 1);
-        setLock(true);
-    };
     const nextStage = () => {
+        console.log(ResultRef.current);
         setStage((prevStage) => prevStage + 1);
-        setLock(true);
     };
 
     //添加測驗結果
     const addVARKResults = (result) => {
-        setResults((prevResults) => {
-            return {
-                ...prevResults,
-                [Page[stage].name]: result,
-            };
-        });
+        ResultRef.current.VARK = result;
     };
-    const addResults = (retention, transfer) => {
-        setResults((prevResults) => {
-            return {
-                ...prevResults,
-                [Page[stage].name]: {
-                    courseRelation: pet.name,
-                    interactivity: pet.interact,
-                    retention,
-                    transfer,
-                },
-            };
-        });
-        setLock(false);
+    const addResults = (newResult) => {
+        const existingIndex = ResultRef.current.results.findIndex(
+            (result) =>
+                result.courseRelated === pet.courseRelated &&
+                result.interactivity === pet.interactivity
+        );
+
+        if (existingIndex !== -1) {
+            ResultRef.current.results[existingIndex] = merge(
+                ResultRef.current.results[existingIndex],
+                newResult
+            );
+        } else {
+            ResultRef.current.results.push({
+                ...newResult,
+                courseRelated: pet.courseRelated,
+                interactivity: pet.interactivity,
+            });
+        }
     };
-    const addPetStatus = (status) => {
-        setResults((prevResults) => {
-            return {
-                ...prevResults,
-                [Page[stage].name]: status,
-            };
-        });
+    const addInfo = (info, value) => {
+        ResultRef.current[info] = value;
     };
 
     //下載測驗結果
     const downloadJSON = () => {
         const dataStr =
             "data:text/json;charset=utf-8," +
-            encodeURIComponent(JSON.stringify(results));
+            encodeURIComponent(JSON.stringify(ResultRef.current));
         const downloadAnchorNode = document.createElement("a");
         downloadAnchorNode.setAttribute("href", dataStr);
         downloadAnchorNode.setAttribute("download", "result.json");
@@ -76,7 +71,7 @@ function App() {
             name: "實驗設定",
             component: <SettingPage nextStage={nextStage} setPet={setPet} />,
         },
-        { name: "實驗介紹", component: <Introduction setLock={setLock} /> },
+        { name: "實驗介紹", component: <Introduction nextStage={nextStage} /> },
         {
             name: "學習模式測驗",
             component: (
@@ -88,54 +83,73 @@ function App() {
         },
         {
             name: "寵物介紹",
-            component: <PetIntroduction pet={pet} setLock={setLock} />,
+            component: <PetIntroduction pet={pet} nextStage={nextStage} />,
         },
         {
             name: "課程 企業減碳法規全攻略 (上)",
             component: (
-                <>
-                    <CoursePage courseNum={1} setLock={setLock} />
-                    <Pet setting={pet} />
-                </>
+                <CoursePage
+                    courseNum={1}
+                    pet={pet}
+                    addPetStatus={addResults}
+                    nextStage={nextStage}
+                />
             ),
         },
         {
             name: "測驗 企業減碳法規全攻略 (上)",
-            component: <ExamPage courseNum={1} addResults={addResults} />,
+            component: (
+                <ExamPage
+                    courseNum={1}
+                    addResults={addResults}
+                    nextStage={nextStage}
+                />
+            ),
         },
         {
             name: "寵物狀態更新",
-            component: <PetIntroduction pet={pet} setLock={setLock} />,
+            component: <PetIntroduction pet={pet} nextStage={nextStage} />,
         },
         {
             name: "課程 企業減碳法規全攻略 (下)",
             component: (
-                <>
-                    <CoursePage courseNum={2} setLock={setLock} />
-                    <Pet setting={pet} />
-                </>
+                <CoursePage
+                    courseNum={2}
+                    pet={pet}
+                    addPetStatus={addResults}
+                    nextStage={nextStage}
+                />
             ),
         },
         {
             name: "測驗 企業減碳法規全攻略 (下)",
-            component: <ExamPage courseNum={2} addResults={addResults} />,
+            component: (
+                <ExamPage
+                    courseNum={2}
+                    addResults={addResults}
+                    nextStage={nextStage}
+                />
+            ),
         },
-        { name: "滿意度調查", component: <button onClick={downloadJSON} /> },
-        { name: "基本資料填寫", component: <></> },
-        { name: "訪問", component: <></> },
+        {
+            name: "基本資料填寫",
+            component: <InfoFormPage nextStage={nextStage} addInfo={addInfo} />,
+        },
+        {
+            name: "訪問",
+            component: <button onClick={downloadJSON}>下載資料</button>,
+        },
     ];
 
-    //控制按鈕顯示
+    //控制寵物切換
     useEffect(() => {
-        if (stage === 5) {
+        if (stage === 6) {
             setPet((prevPet) => {
-                return { name: prevPet.name, interact: !prevPet.interact };
+                return {
+                    courseRelated: prevPet.courseRelated,
+                    interactivity: !prevPet.interactivity,
+                };
             });
-        }
-        if (stage === 0 || stage === 2) {
-            setShowBt(false);
-        } else {
-            setShowBt(true);
         }
     }, [stage]);
 
@@ -143,14 +157,6 @@ function App() {
         <>
             <h1 className="title">{Page[stage].name}</h1>
             {Page[stage].component}
-            <button
-                className="nextBt"
-                onClick={handleNext}
-                disabled={lock}
-                style={{ display: showBt ? "block" : "none" }}
-            >
-                下一步
-            </button>
         </>
     );
 }

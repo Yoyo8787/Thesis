@@ -9,7 +9,6 @@ function VideoPlayer({ connect, link, setLock }) {
 
     const handleTogglePlayPause = () => {
         const video = videoRef.current;
-        setLock(false);
         if (isPlaying) {
             video.pause();
             setIsPlaying(false);

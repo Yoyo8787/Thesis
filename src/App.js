@@ -7,6 +7,7 @@ import ExamPage from "./components/ExamPage";
 import SettingPage from "./components/SettingPage";
 import LearningTestPage from "./components/LearningTestPage";
 import InfoFormPage from "./components/InfoFormPage";
+import AnotherFormPage from "./components/AnotherFormPage";
 
 function App() {
     const [stage, setStage] = useState(0);
@@ -129,6 +130,12 @@ function App() {
                     addResults={addResults}
                     nextStage={nextStage}
                 />
+            ),
+        },
+        {
+            name: "問卷調查",
+            component: (
+                <AnotherFormPage nextStage={nextStage} addInfo={addInfo} />
             ),
         },
         {

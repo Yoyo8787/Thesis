@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import VARK from "../assets/VARK.json";
+import projectSetting from "../assets/Setting";
 
 const VarkQuiz = ({ nextStage, addVARKResults }) => {
     const [answers, setAnswers] = useState(
         Array(VARK.questions.length).fill(null)
     );
     const [result, setResult] = useState({ V: 0, A: 0, R: 0, K: 0 });
-    const [lock, setLock] = useState(true);
+    const [lock, setLock] = useState(projectSetting.lockPage);
 
     const handleSubmit = () => {
-        if (!answers.includes(null)) {
-            const maxScore = Math.max(result.V, result.A, result.R, result.K);
-            const primaryVark = Object.keys(result).find(
-                (key) => result[key] === maxScore
-            );
-            alert(`你的主要學習方式是: ${primaryVark}`);
-            addVARKResults(result);
-            nextStage();
-        } else {
-            alert("請完成所有問題");
-        }
+        const maxScore = Math.max(result.V, result.A, result.R, result.K);
+        const primaryVark = Object.keys(result).find(
+            (key) => result[key] === maxScore
+        );
+        alert(`你的主要學習方式是: ${primaryVark}`);
+        addVARKResults(result);
+        nextStage();
     };
 
     useEffect(() => {

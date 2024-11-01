@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Pet1Intro } from "../assets/Pet1/Pet1";
 import { Pet2Intro } from "../assets/Pet2/Pet2";
+import projectSetting from "../assets/Setting";
 
 const PetIntroduction = ({ pet, nextStage }) => {
     const petIntro = pet.courseRelated ? Pet1Intro : Pet2Intro;
     const interactalbe = pet.interactivity;
-    const [lock, setLock] = useState(true);
+    const [lock, setLock] = useState(projectSetting.lockPage);
 
     return (
         <>

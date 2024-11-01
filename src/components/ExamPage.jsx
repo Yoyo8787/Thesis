@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import Exam from "./Exam";
 import LikertScale from "./LikertScale";
+import projectSetting from "../assets/Setting";
 
 const ExamPage = ({ courseNum, addResults, nextStage }) => {
-    const [lock, setLock] = useState(true);
+    const [lock, setLock] = useState(projectSetting.lockPage);
     const examRef = useRef({
         retention: 0,
         transfer: 0,

@@ -53,23 +53,26 @@ const LikertScale = ({ examRef, checkFinished }) => {
         <>
             {DV.questions.map((section, sectionIndex) => (
                 <table key={section.name} className="likert">
-                    <tr>
-                        <th></th>
-                        <th className="likertHead">非常不同意</th>
-                        <th className="likertHead">不同意</th>
-                        <th className="likertHead">稍微不同意</th>
-                        <th className="likertHead">中立</th>
-                        <th className="likertHead">稍微同意</th>
-                        <th className="likertHead">同意</th>
-                        <th className="likertHead">非常同意</th>
-                    </tr>
-
-                    {section.statements.map((statement, statementIndex) => (
-                        <tr key={statementIndex}>
-                            <td className="statement">{statement}</td>
-                            {LikertOptions(section.name, statementIndex)}
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th className="likertHead">非常不同意</th>
+                            <th className="likertHead">不同意</th>
+                            <th className="likertHead">稍微不同意</th>
+                            <th className="likertHead">中立</th>
+                            <th className="likertHead">稍微同意</th>
+                            <th className="likertHead">同意</th>
+                            <th className="likertHead">非常同意</th>
                         </tr>
-                    ))}
+                    </thead>
+                    <tbody>
+                        {section.statements.map((statement, statementIndex) => (
+                            <tr key={statementIndex}>
+                                <td className="statement">{statement}</td>
+                                {LikertOptions(section.name, statementIndex)}
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             ))}
         </>

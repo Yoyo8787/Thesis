@@ -32,6 +32,32 @@ const Pet = ({ connect, setting, recordRef }) => {
     const [direction, setDirection] = useState(0);
     const positionRef = useRef([0, 0]);
 
+    // 預加載圖片
+    const preloadImages = (imageArray) => {
+        imageArray.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        });
+    };
+    useEffect(() => {
+        const imagesToPreload = setting.courseRelated
+            ? [
+                  ...Pet1.idleAnime,
+                  ...Pet1.walkAnime,
+                  ...Pet1.clickAnime,
+                  ...Pet1.holdAnime,
+                  ...Pet1.backAnime,
+              ]
+            : [
+                  ...Pet2.idleAnime,
+                  ...Pet2.walkAnime,
+                  ...Pet2.clickAnime,
+                  ...Pet2.holdAnime,
+                  ...Pet2.backAnime,
+              ];
+        preloadImages(imagesToPreload);
+    }, [setting]);
+
     const speed = 1;
     const interval = 100;
 

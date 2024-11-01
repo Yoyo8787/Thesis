@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import questionnaire from "../assets/BasicInfo.json";
+import projectSetting from "../assets/Setting";
 
 const InfoFormPage = ({ addInfo, nextStage }) => {
-    const [lock, setLock] = useState(false);
+    const [lock, setLock] = useState(projectSetting.lockPage);
     const [result, setResult] = useState({});
     const [otherInput, setOtherInput] = useState({}); // 用來儲存 "其他" 選項的輸入
 

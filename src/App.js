@@ -19,6 +19,14 @@ function App() {
         results: [],
     });
 
+    //避免使用者重整頁面
+    useEffect(() => {
+        window.onbeforeunload = function (event) {
+            event.preventDefault();
+            event.returnValue = "請勿離開實驗畫面";
+        };
+    }, []);
+
     //流程控制
     const nextStage = () => {
         console.log(ResultRef.current);

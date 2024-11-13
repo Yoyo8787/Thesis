@@ -1,4 +1,4 @@
 const projectSetting = {
-    lockPage: false,
+    lockPage: true,
 };
 export default projectSetting;

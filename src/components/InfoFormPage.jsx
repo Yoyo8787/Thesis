@@ -19,9 +19,7 @@ const InfoFormPage = ({ addInfo, nextStage }) => {
     const handleOtherInputChange = (event) => {
         const { name, value } = event.target;
         setOtherInput({ ...otherInput, [name]: value });
-
-        // 將 "其他" 的輸入值存入 result
-        setResult({ ...result, [name]: value });
+        setResult({ ...result, [name]: "其他 (Other)" });
         addInfo(name, value);
         checkCompletion({ ...result, [name]: value });
     };

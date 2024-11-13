@@ -6,15 +6,15 @@ const AnotherFormPage = ({ addInfo, nextStage }) => {
     const [lock, setLock] = useState(projectSetting.lockPage);
     const [responses, setResponses] = useState({});
     const examRef = useRef({
-        petRelation: [0, 0],
+        "MC-relation": [0],
     });
     const handleSubmit = () => {
-        addInfo("petRelation", examRef.current.petRelation);
+        addInfo("MC-relation", examRef.current["MC-relation"]);
         nextStage();
     };
 
     const checkFinished = () => {
-        if (!examRef.current.petRelation.includes(0)) {
+        if (!examRef.current["MC-relation"].includes(0)) {
             setLock(false);
         } else {
             console.log(examRef.current);

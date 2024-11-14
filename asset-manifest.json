@@ -1,10 +1,10 @@
 {
   "files": {
     "main.css": "/Thesis/static/css/main.e2d704cd.css",
-    "main.js": "/Thesis/static/js/main.29738e4b.js",
+    "main.js": "/Thesis/static/js/main.4ed37c3e.js",
     "static/js/453.8ab44547.chunk.js": "/Thesis/static/js/453.8ab44547.chunk.js",
     "static/media/Course2.mp4": "/Thesis/static/media/Course2.87e8cff87a4e47d88ada.mp4",
-    "static/media/Course1.mp4": "/Thesis/static/media/Course1.5cdbcc2387e88a16f127.mp4",
+    "static/media/Course1.mp4": "/Thesis/static/media/Course1.0a7157267c7a4f457b1d.mp4",
     "static/media/Pet_1_idle_1.png": "/Thesis/static/media/Pet_1_idle_1.24c014d20800855e6dc8.png",
     "static/media/Pet_1_idle_2.png": "/Thesis/static/media/Pet_1_idle_2.a9c456cb5b46788458c7.png",
     "static/media/Pet_1_idle_0.png": "/Thesis/static/media/Pet_1_idle_0.438419086f655c2e1daf.png",
@@ -43,11 +43,11 @@
     "static/media/pause-button.png": "/Thesis/static/media/pause-button.05120b8d811e0e5afd80.png",
     "index.html": "/Thesis/index.html",
     "main.e2d704cd.css.map": "/Thesis/static/css/main.e2d704cd.css.map",
-    "main.29738e4b.js.map": "/Thesis/static/js/main.29738e4b.js.map",
+    "main.4ed37c3e.js.map": "/Thesis/static/js/main.4ed37c3e.js.map",
     "453.8ab44547.chunk.js.map": "/Thesis/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e2d704cd.css",
-    "static/js/main.29738e4b.js"
+    "static/js/main.4ed37c3e.js"
   ]
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import playIcon from "../assets/play-button.png";
 import pauseIcon from "../assets/pause-button.png";
 
@@ -19,6 +19,19 @@ function VideoPlayer({ connect, link, setLock }) {
             setIsPlaying(true);
         }
     };
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.code === "Space" || event.key === " ") {
+                event.preventDefault(); // Prevent the default behavior of the spacebar
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
 
     return (
         <div ref={connect} className="videoPlayer">

@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Pet1 from "../assets/Pet1/Pet1";
-import Pet2 from "../assets/Pet2/Pet2";
+import PetRelated from "../assets/PetRelated/PetRelated";
+import PetUnRelated from "../assets/PetUnrelated/PetUnRelated";
 import { isEqual } from "lodash";
 const Pet = ({ connect, setting, recordRef }) => {
     const Animation = useMemo(() => {
         if (setting.courseRelated) {
             return {
-                idle: Pet1.idleAnime,
-                walk: Pet1.walkAnime,
-                click: Pet1.clickAnime,
-                hold: Pet1.holdAnime,
-                back: Pet1.backAnime,
+                idle: PetRelated.idleAnime,
+                walk: PetRelated.walkAnime,
+                click: PetRelated.clickAnime,
+                hold: PetRelated.holdAnime,
+                back: PetRelated.backAnime,
             };
         } else {
             return {
-                idle: Pet2.idleAnime,
-                walk: Pet2.walkAnime,
-                click: Pet2.clickAnime,
-                hold: Pet2.holdAnime,
-                back: Pet2.backAnime,
+                idle: PetUnRelated.idleAnime,
+                walk: PetUnRelated.walkAnime,
+                click: PetUnRelated.clickAnime,
+                hold: PetUnRelated.holdAnime,
+                back: PetUnRelated.backAnime,
             };
         }
     }, [setting]);
@@ -42,18 +42,18 @@ const Pet = ({ connect, setting, recordRef }) => {
     useEffect(() => {
         const imagesToPreload = setting.courseRelated
             ? [
-                  ...Pet1.idleAnime,
-                  ...Pet1.walkAnime,
-                  ...Pet1.clickAnime,
-                  ...Pet1.holdAnime,
-                  ...Pet1.backAnime,
+                  ...PetRelated.idleAnime,
+                  ...PetRelated.walkAnime,
+                  ...PetRelated.clickAnime,
+                  ...PetRelated.holdAnime,
+                  ...PetRelated.backAnime,
               ]
             : [
-                  ...Pet2.idleAnime,
-                  ...Pet2.walkAnime,
-                  ...Pet2.clickAnime,
-                  ...Pet2.holdAnime,
-                  ...Pet2.backAnime,
+                  ...PetUnRelated.idleAnime,
+                  ...PetUnRelated.walkAnime,
+                  ...PetUnRelated.clickAnime,
+                  ...PetUnRelated.holdAnime,
+                  ...PetUnRelated.backAnime,
               ];
         preloadImages(imagesToPreload);
     }, [setting]);
@@ -67,7 +67,7 @@ const Pet = ({ connect, setting, recordRef }) => {
             setFrame((prevFrame) => {
                 return prevFrame + 1;
             });
-        }, 200);
+        }, 250);
 
         return () => clearInterval(interval);
     }, [Animation]);
@@ -306,10 +306,7 @@ const Pet = ({ connect, setting, recordRef }) => {
                 left: position[0],
                 top: position[1],
                 transform: `rotate(${isDragging ? rotation : 0}deg) rotateY(${
-                    (direction >= 90 && direction <= 270) ===
-                    !setting.courseRelated
-                        ? 180
-                        : 0
+                    direction >= 90 && direction <= 270 ? 180 : 0
                 }deg)`,
                 transition: isDragging ? "none" : "transform 0.3s ease-out",
             }}

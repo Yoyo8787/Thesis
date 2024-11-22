@@ -12,8 +12,8 @@ const SettingPage = ({ nextStage, setPet }) => {
                     <option value="" disabled>
                         請選擇
                     </option>
-                    <option value="unrelated">貓咪</option>
-                    <option value="related">環保小烏龜</option>
+                    <option value="unrelated">不相關</option>
+                    <option value="related">相關</option>
                 </select>
             </div>
 

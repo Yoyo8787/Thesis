@@ -14,7 +14,13 @@ const VarkQuiz = ({ nextStage, addVARKResults }) => {
         const primaryVark = Object.keys(result).find(
             (key) => result[key] === maxScore
         );
-        alert(`你的主要學習方式是: ${primaryVark}`);
+        const resultToChinese = {
+            V: "視覺學習者",
+            A: "聽覺學習者",
+            R: "閱讀寫作學習者",
+            K: "動手學習者",
+        };
+        alert(`你的主要學習方式是: ${resultToChinese[primaryVark]}`);
         addVARKResults(result);
         nextStage();
     };

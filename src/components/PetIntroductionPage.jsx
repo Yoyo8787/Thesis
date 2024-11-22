@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Pet1Intro } from "../assets/Pet1/Pet1";
-import { Pet2Intro } from "../assets/Pet2/Pet2";
+import { PetRelatedIntro } from "../assets/PetRelated/PetRelated";
+import { PetUnRelatedIntro } from "../assets/PetUnrelated/PetUnRelated";
 import projectSetting from "../assets/Setting";
 
 const PetIntroduction = ({ pet, nextStage }) => {
-    const petIntro = pet.courseRelated ? Pet1Intro : Pet2Intro;
+    const petIntro = pet.courseRelated ? PetRelatedIntro : PetUnRelatedIntro;
     const interactalbe = pet.interactivity;
     const [lock, setLock] = useState(projectSetting.lockPage);
 
@@ -23,7 +23,7 @@ const PetIntroduction = ({ pet, nextStage }) => {
                     <div className="card">
                         <h1>{petIntro.cardTitle}</h1>
                         <div className="turtle-container">
-                            <img src={petIntro.image} alt="背著工廠的烏龜" />
+                            <img src={petIntro.image} alt="背著工廠的貓咪" />
                         </div>
 
                         <div className="description">
@@ -41,7 +41,11 @@ const PetIntroduction = ({ pet, nextStage }) => {
                                 {petIntro.interactions.map(
                                     (interaction, index) => (
                                         <li key={index}>
-                                            <strong>{interaction.title}</strong>
+                                            <strong
+                                                style={{ fontSize: "1.5rem" }}
+                                            >
+                                                {interaction.title}
+                                            </strong>
                                             ：{interaction.content}
                                         </li>
                                     )

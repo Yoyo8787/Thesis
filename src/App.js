@@ -95,7 +95,7 @@ function App() {
             component: <PetIntroduction pet={pet} nextStage={nextStage} />,
         },
         {
-            name: "課程 企業減碳法規全攻略 (上)",
+            name: "課程 企業減碳法規全攻略 從政策到義務",
             component: (
                 <CoursePage
                     courseNum={1}
@@ -106,7 +106,7 @@ function App() {
             ),
         },
         {
-            name: "測驗 企業減碳法規全攻略 (上)",
+            name: "測驗 企業減碳法規全攻略 從政策到義務",
             component: (
                 <ExamPage
                     courseNum={1}
@@ -120,7 +120,7 @@ function App() {
             component: <PetIntroduction pet={pet} nextStage={nextStage} />,
         },
         {
-            name: "課程 企業減碳法規全攻略 (下)",
+            name: "課程 企業減碳法規全攻略 措施實施與合規審查",
             component: (
                 <CoursePage
                     courseNum={2}
@@ -131,7 +131,7 @@ function App() {
             ),
         },
         {
-            name: "測驗 企業減碳法規全攻略 (下)",
+            name: "測驗 企業減碳法規全攻略 措施實施與合規審查",
             component: (
                 <ExamPage
                     courseNum={2}

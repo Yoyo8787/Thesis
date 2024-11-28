@@ -25,6 +25,19 @@ function App() {
             event.preventDefault();
             event.returnValue = "請勿離開實驗畫面";
         };
+        // 禁用縮放
+        const handleWheel = (e) => {
+            if (e.ctrlKey) {
+                // 檢測Ctrl+滾輪縮放
+                e.preventDefault();
+            }
+        };
+
+        window.addEventListener("wheel", handleWheel, { passive: false });
+
+        return () => {
+            window.removeEventListener("wheel", handleWheel);
+        };
     }, []);
 
     //流程控制

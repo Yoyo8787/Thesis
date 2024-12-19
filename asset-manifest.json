@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Thesis/static/css/main.e0463085.css",
-    "main.js": "/Thesis/static/js/main.74d6af43.js",
+    "main.css": "/Thesis/static/css/main.ceba1130.css",
+    "main.js": "/Thesis/static/js/main.edd3bef7.js",
     "static/js/453.8ab44547.chunk.js": "/Thesis/static/js/453.8ab44547.chunk.js",
     "static/media/Course2.mp4": "/Thesis/static/media/Course2.e2b5e5e4a450ff7b72fd.mp4",
     "static/media/Course1.mp4": "/Thesis/static/media/Course1.c9778721a8a0666214e5.mp4",
@@ -34,12 +34,12 @@
     "static/media/play-button.png": "/Thesis/static/media/play-button.ece6d6077991355cb396.png",
     "static/media/pause-button.png": "/Thesis/static/media/pause-button.05120b8d811e0e5afd80.png",
     "index.html": "/Thesis/index.html",
-    "main.e0463085.css.map": "/Thesis/static/css/main.e0463085.css.map",
-    "main.74d6af43.js.map": "/Thesis/static/js/main.74d6af43.js.map",
+    "main.ceba1130.css.map": "/Thesis/static/css/main.ceba1130.css.map",
+    "main.edd3bef7.js.map": "/Thesis/static/js/main.edd3bef7.js.map",
     "453.8ab44547.chunk.js.map": "/Thesis/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e0463085.css",
-    "static/js/main.74d6af43.js"
+    "static/css/main.ceba1130.css",
+    "static/js/main.edd3bef7.js"
   ]
 }

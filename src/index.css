@@ -179,7 +179,7 @@ code {
 
 .ExamPage {
     width: 75vw;
-    max-width: 45rem;
+    max-width: 60rem;
     max-height: calc(100vh - 14rem);
     overflow-y: auto;
     padding-bottom: 1rem;
@@ -211,7 +211,8 @@ code {
     height: 4rem;
 }
 .statement {
-    width: 16rem;
+    width: 20rem;
+    padding-bottom: 2rem;
     padding-left: 0.5rem;
 }
 .likertHead {
@@ -221,7 +222,7 @@ code {
     align-items: center;
 }
 .radio {
-    vertical-align: middle;
+    vertical-align: baseline;
     cursor: pointer;
     text-align: center;
 }

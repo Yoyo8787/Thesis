@@ -3,15 +3,14 @@ import video2 from "../assets/Course2.mp4";
 import VideoPlayer from "./VideoPlayer";
 import Pet from "./Pet";
 import { useRef, useEffect, useState } from "react";
-import projectSetting from "../assets/Setting";
 
-const CoursePage = ({ courseNum, pet, addPetStatus, nextStage }) => {
+const CoursePage = ({ courseNum, pet, addPetStatus, nextStage, testMode }) => {
     const recordRef = useRef({ petClicked: 0, petDragged: 0, petCenter: 0 });
 
     const videoRef = useRef(null);
     const petRef = useRef(null);
 
-    const [lock, setLock] = useState(projectSetting.lockPage);
+    const [lock, setLock] = useState(testMode);
 
     const checkOverlap = () => {
         if (!videoRef.current || !petRef.current) return;

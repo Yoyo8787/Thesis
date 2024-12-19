@@ -1,16 +1,21 @@
 import React, { useRef, useState } from "react";
 import Exam from "./Exam";
 import LikertScale from "./LikertScale";
-import projectSetting from "../assets/Setting";
 
-const ExamPage = ({ courseNum, addResults, nextStage }) => {
-    const [lock, setLock] = useState(projectSetting.lockPage);
+const ExamPage = ({ courseNum, addResults, nextStage, testMode }) => {
+    const [lock, setLock] = useState(testMode);
     const [MC, setMC] = useState(-1);
     const examRef = useRef({
         retention: 0,
         transfer: 0,
         "MW-D": [0, 0, 0, 0],
         "MW-S": [0, 0, 0, 0, 0],
+        Efficiency: [0, 0, 0],
+        Effectiveness: [0, 0, 0],
+        ClassicalAesthetics: [0, 0, 0],
+        ExpressiveAesthetics: [0, 0, 0],
+        Playfulness: [0, 0, 0],
+        OverallSatisfaction: [0, 0, 0],
         intrest: [0, 0],
         engagement: [0, 0],
         "MC-interactivity": -1,
@@ -23,9 +28,15 @@ const ExamPage = ({ courseNum, addResults, nextStage }) => {
         if (
             !examRef.current["MW-D"].includes(0) &&
             !examRef.current["MW-S"].includes(0) &&
+            !examRef.current.Efficiency.includes(0) &&
+            !examRef.current.Effectiveness.includes(0) &&
+            !examRef.current.ClassicalAesthetics.includes(0) &&
+            !examRef.current.ExpressiveAesthetics.includes(0) &&
+            !examRef.current.Playfulness.includes(0) &&
+            !examRef.current.OverallSatisfaction.includes(0) &&
             !examRef.current.intrest.includes(0) &&
             !examRef.current.engagement.includes(0) &&
-            examRef.current.MC !== -1
+            examRef.current["MC-interactivity"] !== -1
         ) {
             setLock(false);
         } else {

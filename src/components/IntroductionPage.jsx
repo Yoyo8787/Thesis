@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import projectSetting from "../assets/Setting";
 
-const Introduction = ({ nextStage }) => {
-    const [lock, setLock] = useState(projectSetting.lockPage);
+const Introduction = ({ nextStage, testMode }) => {
+    const [lock, setLock] = useState(testMode);
 
     return (
         <>

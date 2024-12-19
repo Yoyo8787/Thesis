@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
 import MC from "../assets/MC.json";
-import projectSetting from "../assets/Setting";
 
-const AnotherFormPage = ({ addInfo, nextStage }) => {
-    const [lock, setLock] = useState(projectSetting.lockPage);
+const AnotherFormPage = ({ addInfo, nextStage, testMode }) => {
+    const [lock, setLock] = useState(testMode);
     const [responses, setResponses] = useState({});
     const examRef = useRef({
         "MC-relation": [0],

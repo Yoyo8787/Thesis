@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { PetRelatedIntro } from "../assets/PetRelated/PetRelated";
 import { PetUnRelatedIntro } from "../assets/PetUnrelated/PetUnRelated";
-import projectSetting from "../assets/Setting";
 
-const PetIntroduction = ({ pet, nextStage }) => {
+const PetIntroduction = ({ pet, nextStage, testMode }) => {
     const petIntro = pet.courseRelated ? PetRelatedIntro : PetUnRelatedIntro;
     const interactalbe = pet.interactivity;
-    const [lock, setLock] = useState(projectSetting.lockPage);
+    const [lock, setLock] = useState(testMode);
 
     return (
         <>

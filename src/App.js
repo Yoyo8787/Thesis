@@ -11,6 +11,7 @@ import AnotherFormPage from "./components/AnotherFormPage";
 
 function App() {
     const [stage, setStage] = useState(0);
+    const [testMode, setTestMode] = useState(false);
     const [pet, setPet] = useState({
         courseRelated: false,
         interactivity: false,
@@ -91,21 +92,39 @@ function App() {
     const Page = [
         {
             name: "實驗設定",
-            component: <SettingPage nextStage={nextStage} setPet={setPet} />,
+            component: (
+                <SettingPage
+                    nextStage={nextStage}
+                    setPet={setPet}
+                    setTestMode={setTestMode}
+                />
+            ),
         },
-        { name: "實驗介紹", component: <Introduction nextStage={nextStage} /> },
+        {
+            name: "實驗介紹",
+            component: (
+                <Introduction nextStage={nextStage} testMode={testMode} />
+            ),
+        },
         {
             name: "學習模式測驗",
             component: (
                 <LearningTestPage
                     nextStage={nextStage}
                     addVARKResults={addVARKResults}
+                    testMode={testMode}
                 />
             ),
         },
         {
             name: "寵物介紹",
-            component: <PetIntroduction pet={pet} nextStage={nextStage} />,
+            component: (
+                <PetIntroduction
+                    pet={pet}
+                    nextStage={nextStage}
+                    testMode={testMode}
+                />
+            ),
         },
         {
             name: "課程 企業減碳法規全攻略 從政策到義務",
@@ -115,6 +134,7 @@ function App() {
                     pet={pet}
                     addPetStatus={addResults}
                     nextStage={nextStage}
+                    testMode={testMode}
                 />
             ),
         },
@@ -125,12 +145,19 @@ function App() {
                     courseNum={1}
                     addResults={addResults}
                     nextStage={nextStage}
+                    testMode={testMode}
                 />
             ),
         },
         {
             name: "寵物狀態更新",
-            component: <PetIntroduction pet={pet} nextStage={nextStage} />,
+            component: (
+                <PetIntroduction
+                    pet={pet}
+                    nextStage={nextStage}
+                    testMode={testMode}
+                />
+            ),
         },
         {
             name: "課程 企業減碳法規全攻略 措施實施與合規審查",
@@ -140,6 +167,7 @@ function App() {
                     pet={pet}
                     addPetStatus={addResults}
                     nextStage={nextStage}
+                    testMode={testMode}
                 />
             ),
         },
@@ -150,18 +178,29 @@ function App() {
                     courseNum={2}
                     addResults={addResults}
                     nextStage={nextStage}
+                    testMode={testMode}
                 />
             ),
         },
         {
             name: "問卷調查",
             component: (
-                <AnotherFormPage nextStage={nextStage} addInfo={addInfo} />
+                <AnotherFormPage
+                    nextStage={nextStage}
+                    addInfo={addInfo}
+                    testMode={testMode}
+                />
             ),
         },
         {
             name: "基本資料填寫",
-            component: <InfoFormPage nextStage={nextStage} addInfo={addInfo} />,
+            component: (
+                <InfoFormPage
+                    nextStage={nextStage}
+                    addInfo={addInfo}
+                    testMode={testMode}
+                />
+            ),
         },
         {
             name: "訪問",

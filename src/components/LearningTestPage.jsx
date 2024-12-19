@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import VARK from "../assets/VARK.json";
-import projectSetting from "../assets/Setting";
 
-const VarkQuiz = ({ nextStage, addVARKResults }) => {
+const VarkQuiz = ({ nextStage, addVARKResults, testMode }) => {
     const [answers, setAnswers] = useState(
         Array(VARK.questions.length).fill(null)
     );
     const [result, setResult] = useState({ V: 0, A: 0, R: 0, K: 0 });
-    const [lock, setLock] = useState(projectSetting.lockPage);
+    const [lock, setLock] = useState(testMode);
 
     const handleSubmit = () => {
         const maxScore = Math.max(result.V, result.A, result.R, result.K);

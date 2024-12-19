@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 
-const SettingPage = ({ nextStage, setPet }) => {
+const SettingPage = ({ nextStage, setPet, setTestMode }) => {
     const petRef = useRef(null);
     const interactivityRef = useRef(null);
+    const testmodeRef = useRef(null);
 
     return (
         <div className="SettingPage">
@@ -27,6 +28,16 @@ const SettingPage = ({ nextStage, setPet }) => {
                     <option value="noninteractive">不可互動</option>
                 </select>
             </div>
+            <div className="settingblock">
+                <label htmlFor="testmode">測試模式:</label>
+                <select id="testmode" ref={testmodeRef}>
+                    <option value="" disabled>
+                        請選擇
+                    </option>
+                    <option value="off">正式測驗</option>
+                    <option value="on">測試模式</option>
+                </select>
+            </div>
             <div className="settingblock" style={{ justifyContent: "center" }}>
                 <button
                     style={{
@@ -44,6 +55,7 @@ const SettingPage = ({ nextStage, setPet }) => {
                             interactivity:
                                 interactivityRef.current.value === "ineractive",
                         });
+                        setTestMode(testmodeRef.current.value !== "on");
                         nextStage();
                     }}
                 >
